@@ -20,10 +20,19 @@ else:
     # Create an OpenAI client.
     client = OpenAI(api_key=openai_api_key)
 
-    # Create a session state variable to store the chat messages. This ensures that the
-    # messages persist across reruns.
-    if "messages" not in st.session_state:
-        st.session_state.messages = []
+ # Create a session state variable to store the chat messages. This ensures that the
+# messages persist across reruns.
+if "messages" not in st.session_state:
+    st.session_state.messages = [
+        {"role": "system", "content": "You are a helpful assistant. When you start a conversation just say: You are in Yigido Universe."}  # Instructions for the assistant role
+    ]
+
+# Display the existing chat messages via `st.chat_message`.
+for message in st.session_state.messages:
+    with st.chat_message(message["role"]):
+        st.markdown(message["content"])
+
+# The rest of your existing code...
 
     # Display the existing chat messages via `st.chat_message`.
     for message in st.session_state.messages:
